@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/base}">
+<head>
+    <title th:text="${employee.id} ? 'Edit Employee' : 'New Employee'"></title>
+</head>
+<body>
+<main layout:fragment="content">
+    <div class="wa-container">
+        <div class="wa-card">
+            <div class="wa-card-header">
+                <h2 th:text="${employee.id} ? 'Edit Employee' : 'New Employee'"></h2>
+            </div>
+
+            <div class="wa-card-body">
+                <form th:action="${employee.id} ? @{/companies/{companyId}/employees/{id}(companyId=${companyId},id=${employee.id})} : @{/companies/{companyId}/employees(companyId=${companyId})}"
+                      th:method="${employee.id} ? 'put' : 'post'"
+                      th:object="${employee}">
+
+                    <!-- Personal Information -->
+                    <div class="wa-form-section">
+                        <div class="wa-form-row">
+                            <div class="wa-form-group">
+                                <label class="wa-label">First name *</label>
+                                <input type="text" th:field="*{firstName}" class="wa-input" required>
+                            </div>
+
+                            <div class="wa-form-group">
+                                <label class="wa-label">Last name *</label>
+                                <input type="text" th:field="*{lastName}" class="wa-input" required>
+                            </div>
+                        </div>
+
+                        <div class="wa-form-group">
+                            <label class="wa-label">Email address</label>
+                            <input type="email" th:field="*{email}" class="wa-input">
+                        </div>
+
+                        <!-- Phone Numbers -->
+                        <div class="wa-form-row">
+                            <div class="wa-form-group wa-col-3">
+                                <label class="wa-label">Country code</label>
+                                <select th:field="*{phoneCountryCode}" class="wa-select">
+                                    <option value="+47">Norway (+47)</option>
+                                    <!-- Add more country codes as needed -->
+                                </select>
+                            </div>
+
+                            <div class="wa-form-group">
+                                <label class="wa-label">Phone (Work)</label>
+                                <input type="tel" th:field="*{phoneWork}" class="wa-input">
+                            </div>
+
+                            <div class="wa-form-group">
+                                <label class="wa-label">Phone (Mobile)</label>
+                                <input type="tel" th:field="*{phoneMobile}" class="wa-input">
+                            </div>
+
+                            <div class="wa-form-group">
+                                <label class="wa-label">Phone (Home)</label>
+                                <input type="tel" th:field="*{phoneHome}" class="wa-input">
+                            </div>
+                        </div>
+
+                        <!-- Address -->
+                        <div class="wa-form-group">
+                            <label class="wa-label">Address</label>
+                            <input type="text" th:field="*{address.streetAddress}" class="wa-input">
+                        </div>
+
+                        <div class="wa-form-row">
+                            <div class="wa-form-group">
+                                <label class="wa-label">Postcode</label>
+                                <input type="text" th:field="*{address.postcode}" class="wa-input">
+                            </div>
+
+                            <div class="wa-form-group">
+                                <label class="wa-label">City</label>
+                                <input type="text" th:field="*{address.city}" class="wa-input">
+                            </div>
+
+                            <div class="wa-form-group">
+                                <label class="wa-label">Country</label>
+                                <select th:field="*{address.country}" class="wa-select">
+                                    <option value="">Select country</option>
+                                    <option value="NO">Norway</option>
+                                    <!-- Add more countries as needed -->
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Employee Details -->
+                    <div class="wa-form-section">
+                        <h3>Employee details</h3>
+
+                        <div class="wa-form-row">
+                            <div class="wa-form-group">
+                                <label class="wa-label">Date of employment *</label>
+                                <input type="date" th:field="*{employmentDate}" class="wa-input" required>
+                            </div>
+
+                            <div class="wa-form-group">
+                                <label class="wa-label">Employee number</label>
+                                <div class="wa-input-group">
+                                    <input type="text" th:field="*{employeeNumber}" class="wa-input"
+                                           th:readonly="${employee.employeeNumber != null}">
+                                    <div class="wa-checkbox-wrapper" th:if="${employee.employeeNumber == null}">
+                                        <input type="checkbox" id="autoGenerate" name="autoGenerate"
+                                               class="wa-checkbox">
+                                        <label for="autoGenerate">Auto-generate employee number</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="wa-form-row">
+                            <div class="wa-form-group">
+                                <label class="wa-label">Employee category</label>
+                                <select th:field="*{employeeCategory}" class="wa-select">
+                                    <option value="">Select category</option>
+                                    <option value="FULL_TIME">Full Time</option>
+                                    <option value="PART_TIME">Part Time</option>
+                                    <option value="CONTRACTOR">Contractor</option>
+                                </select>
+                            </div>
+
+                            <div class="wa-form-group">
+                                <label class="wa-label">Percentage of full-time equivalent (0-100)</label>
+                                <input type="number" th:field="*{fullTimePercentage}" class="wa-input"
+                                       min="0" max="100" value="100">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="wa-form-actions">
+                        <button type="submit" class="wa-button wa-button-primary">Save</button>
+                        <a th:href="@{/companies/{companyId}/employees(companyId=${companyId})}"
+                           class="wa-button wa-button-secondary">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+
+<th:block layout:fragment="scripts">
+    <script th:src="@{/assets/contact/contact.js}"></script>
+</th:block>
+</body>
+
+</html>

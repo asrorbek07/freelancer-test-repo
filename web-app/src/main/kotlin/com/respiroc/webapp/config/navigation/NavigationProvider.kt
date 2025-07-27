@@ -52,7 +52,14 @@ class NavigationProvider {
                 items = listOf(
                     NavigationSectionItem(label = "Bank Accounts Overview", url = "/bank/account"),
                 )
-            )
+            ),
+            NavigationSection(
+                title = "Company", icon = "building",
+                items = listOf(
+                    NavigationSectionItem(label = "Employees", url = "#"),
+                )
+            ),
+
         )
     }
 }

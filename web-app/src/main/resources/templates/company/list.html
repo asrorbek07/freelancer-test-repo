@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/base}">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/assets/fragments/contact-table.css}">
+</head>
+<body>
+<main layout:fragment="content">
+    <div class="wa-container">
+        <div class="wa-card">
+            <div class="wa-card-header">
+                <h2>Employees</h2>
+                <a th:href="@{/companies/{companyId}/employees/new(companyId=${companyId})}"
+                   class="wa-button wa-button-primary">
+                    Add Employee
+                </a>
+            </div>
+
+            <div class="wa-card-body">
+                <table class="wa-table">
+                    <thead>
+                    <tr>
+                        <th>Employee #</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Employment Date</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="employee : ${employees}">
+                        <td th:text="${employee.employeeNumber}"></td>
+                        <td>
+                            <span th:text="${employee.firstName}"></span>
+                            <span th:text="${employee.lastName}"></span>
+                        </td>
+                        <td th:text="${employee.email}"></td>
+                        <td th:text="${employee.phoneMobile ?: employee.phoneWork}"></td>
+                        <td th:text="${#temporals.format(employee.employmentDate, 'dd.MM.yyyy')}"></td>
+                        <td>
+                            <div class="wa-button-group">
+                                <a th:href="@{/companies/{companyId}/employees/{id}/edit(companyId=${companyId},id=${employee.id})}"
+                                   class="wa-button wa-button-small">
+                                    Edit
+                                </a>
+                                <form th:action="@{/companies/{companyId}/employees/{id}(companyId=${companyId},id=${employee.id})}"
+                                      th:method="delete"
+                                      style="display: inline;">
+                                    <button type="submit" class="wa-button wa-button-small wa-button-danger"
+                                            onclick="return confirm('Are you sure you want to delete this employee?')">
+                                        Delete
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>
+<th:block layout:fragment="scripts">
+    <script th:src="@{/assets/contact/contact-form.js}"></script>
+</th:block>
+</body>
+</html>

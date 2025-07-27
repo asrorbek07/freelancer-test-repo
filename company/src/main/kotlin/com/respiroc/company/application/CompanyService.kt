@@ -55,4 +55,7 @@ class CompanyService(
     private fun isValidAddress(payload: CreateCompanyPayload): Boolean {
         return !(payload.addressPart1 == null || payload.city == null || payload.addressCountryCode == null)
     }
+
+    fun findById(id: Long): Company =
+        companyRepository.findById(id).orElseThrow { NoSuchElementException("Company not found with id: $id") }
 }
