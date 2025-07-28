@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/base}">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/assets/company/employee-list.css}">
+</head>
+<body>
+<main layout:fragment="content">
+    <div class="employee-container">
+        <div class="employee-card">
+            <div class="employee-header">
+                <h2 class="employee-title">Employees</h2>
+                <wa-button size="small"
+                           variant="neutral"
+                           th:href="@{/company/employee/new}"
+                           th:text="'Add Employee'">
+                </wa-button>
+            </div>
+
+            <div class="employee-search">
+                <input type="text" id="employeeSearch" placeholder="Search employees...">
+            </div>
+
+            <div class="employee-table-wrapper">
+                <table class="employee-table">
+                    <thead>
+                    <tr>
+                        <th th:text="#{employee.table.full_name}"></th>
+                        <th th:text="#{employee.table.email}"></th>
+                        <th th:text="#{employee.phone_work}"></th>
+                        <th th:text="#{employee.table.employment_date}"></th>
+                        <th th:text="#{employee.table.actions}">
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:if="${#lists.isEmpty(employees)}">
+                        <td colspan="5" class="no-data">No employees found.</td>
+                    </tr>
+                    <tr th:each="employee : ${employees}" th:id="'row-' + ${employee.id}">
+                        <td>
+                            <span th:text="${employee.fullName}"></span>
+                        </td>
+                        <td th:text="${employee.email}"></td>
+                        <td th:text="${employee.phoneWork ?: 'N/A'}"></td>
+                        <td th:text="${#temporals.format(employee.employmentDate, 'YYYY.MM.DD')}"></td>
+                        <td th:data-label="#{contact.table.actions}" class="r-text-right">
+                            <div class="action-buttons">
+
+                                <wa-button size="small"
+                                           variant="neutral"
+                                           th:href="@{/company/employee/{id}/edit(id=${employee.id})}"
+                                           th:text="'Edit'">
+                                </wa-button>
+                                <wa-button
+                                        size="small"
+                                        variant="danger"
+                                        th:hx-delete="@{/company/employee/{id}(id=${employee.id})}"
+                                        th:hx-confirm="'Are you sure you want to delete ' + ${employee.fullName} +  '?'"
+                                        th:hx-target="'#row-' + ${employee.id}"
+                                        hx-disabled-elt="this"
+                                        hx-swap="outerHTML swap:0.3s"
+                                        th:text="'Delete'">
+                                </wa-button>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>
+
+<th:block layout:fragment="scripts">
+    <script th:src="@{/assets/company/employee-list.js}"></script>
+</th:block>
+</body>
+</html>

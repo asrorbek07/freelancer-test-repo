@@ -1,0 +1,103 @@
+.employee-container {
+    padding: 2rem;
+    max-width: 1280px;
+    margin: 0 auto;
+}
+
+.employee-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+.employee-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.employee-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.add-button {
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+}
+
+.employee-search {
+    margin-bottom: 1rem;
+}
+
+.employee-search input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    font-size: 0.95rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+.employee-table-wrapper {
+    overflow-x: auto;
+}
+
+.employee-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+}
+
+.employee-table thead {
+    background-color: #f1f5f9;
+}
+
+.employee-table th, .employee-table td {
+    padding: 0.75rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.employee-table tbody tr:hover {
+    background-color: #f9fafb;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 0.5rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .employee-table thead {
+        display: none;
+    }
+
+    .employee-table tbody tr {
+        display: block;
+        border: 1px solid #ccc;
+        margin-bottom: 1rem;
+        border-radius: 8px;
+        padding: 1rem;
+    }
+
+    .employee-table tbody td {
+        display: flex;
+        justify-content: space-between;
+        padding: 0.5rem 0;
+    }
+
+    .employee-table tbody td::before {
+        content: attr(data-label);
+        font-weight: 600;
+        color: #333;
+    }
+}
+.no-data {
+    text-align: center;
+    font-style: italic;
+    color: #999;
+}
+

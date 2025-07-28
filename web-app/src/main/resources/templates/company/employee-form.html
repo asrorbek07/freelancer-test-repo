@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/base}">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/assets/company/employee-form.css}">
+</head>
+<body>
+<main layout:fragment="content">
+    <div class="employee-form-container">
+        <wa-card>
+            <div style="padding: var(--wa-space-xl)">
+                <form th:action="@{${formAction}}"
+                      method="post"
+                      th:object="${employeeDTO}"
+                      id="employeeForm"
+                      class="wa-grid"
+                      style="--min-column-size: 1000px">
+
+                    <!-- Full Name -->
+                    <wa-input name="fullName"
+                              th:field="*{fullName}"
+                              required
+                              size="medium"
+                              th:value="*{fullName}"
+                              th:label="#{employee.fullname}"></wa-input>
+
+                    <!-- Email -->
+                    <wa-input name="email"
+                              th:field="*{email}"
+                              th:value="*{email}"
+                              size="medium"
+                              th:label="#{employee.email}"></wa-input>
+
+                    <!-- Country Code -->
+                    <wa-select name="phoneCountryCode"
+                               th:field="*{phoneCountryCode}"
+                               th:label="#{employee.country_code}"
+                               th:value="*{phoneCountryCode}">
+                        <wa-option value="+47">Norway (+47)</wa-option>
+                        <wa-option value="+1">USA (+1)</wa-option>
+                        <wa-option value="+44">UK (+44)</wa-option>
+                    </wa-select>
+
+                    <!-- Phone Numbers -->
+                    <wa-input name="phoneWork"
+                              th:field="*{phoneWork}"
+                              size="medium"
+                              th:value="*{phoneWork}"
+                              th:label="#{employee.phone_work}"></wa-input>
+                    <wa-input name="phoneMobile"
+                              th:field="*{phoneMobile}"
+                              th:value="*{phoneMobile}"
+                              size="medium"
+                              th:label="#{employee.phone_mobile}"></wa-input>
+
+                    <!-- Address -->
+                    <wa-input name="address"
+                              th:field="*{address}"
+                              th:value="*{address}"
+                              size="medium"
+                              th:label="#{employee.address}"></wa-input>
+
+                    <!-- Employment Date -->
+                    <wa-input type="date"
+                              name="employmentDate"
+                              th:field="*{employmentDate}"
+                              th:value="*{employmentDate}"
+                              required
+                              th:label="#{employee.employment_date}"></wa-input>
+
+                    <!-- Full-Time Percentage -->
+                    <wa-input type="number"
+                              name="fullTimePercentage"
+                              th:field="*{fullTimePercentage}"
+                              th:value="*{fullTimePercentage}"
+                              min="0" max="100"
+                              th:label="#{employee.fulltime_percentage}"></wa-input>
+
+                    <!-- Form Actions -->
+                    <div class="wa-form-actions">
+                        <wa-button type="submit" variant="primary">Save</wa-button>
+                        <a th:href="@{/company/employee}" class="wa-button wa-button-secondary">Cancel</a>
+                    </div>
+
+                </form>
+            </div>
+        </wa-card>
+    </div>
+</main>
+
+<th:block layout:fragment="scripts">
+    <script th:src="@{/assets/company/employee-form.js}"></script>
+</th:block>
+</body>
+</html>

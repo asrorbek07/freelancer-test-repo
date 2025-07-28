@@ -7,5 +7,4 @@ import org.springframework.stereotype.Repository
 @Repository
 interface EmployeeRepository : JpaRepository<Employee, Long> {
     fun findByCompanyId(companyId: Long): List<Employee>
-    fun findByEmployeeNumber(employeeNumber: String): Employee?
 }

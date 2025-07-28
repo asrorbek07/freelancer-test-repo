@@ -1,6 +1,5 @@
 package com.respiroc.company.domain.model
 
-import com.respiroc.util.domain.address.Address
 import jakarta.persistence.*
 import jakarta.validation.constraints.Email
 import jakarta.validation.constraints.Max
@@ -8,26 +7,23 @@ import jakarta.validation.constraints.Min
 import jakarta.validation.constraints.Size
 import org.hibernate.annotations.CreationTimestamp
 import org.hibernate.annotations.UpdateTimestamp
+import org.springframework.data.jpa.domain.support.AuditingEntityListener
+import java.io.Serializable
 import java.time.Instant
 import java.time.LocalDate
 
 @Entity
 @Table(name = "employees")
-class Employee {
+@EntityListeners(AuditingEntityListener::class)
+
+class Employee : Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long = -1
 
-    @Column(name = "employee_number", unique = true)
-    var employeeNumber: String? = null
-
-    @Column(name = "first_name", nullable = false)
+    @Column(name = "full_name", nullable = false)
     @Size(max = 255)
-    lateinit var firstName: String
-
-    @Column(name = "last_name", nullable = false)
-    @Size(max = 255)
-    lateinit var lastName: String
+    lateinit var fullName: String
 
     @Email
     @Column(name = "email")
@@ -42,24 +38,16 @@ class Employee {
     @Size(max = 20)
     var phoneMobile: String? = null
 
-    @Column(name = "phone_home")
-    @Size(max = 20)
-    var phoneHome: String? = null
-
     @Column(name = "phone_country_code")
-    @Size(max = 5)
+    @Size(min = 1, max = 5) // E.g., "+1", "+44", "+998"
     var phoneCountryCode: String? = null
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "address_id")
-    var address: Address? = null
+    @Column(name = "address")
+    @Size(max = 200)
+    var address: String? = null
 
     @Column(name = "employment_date", nullable = false)
     lateinit var employmentDate: LocalDate
-
-    @Column(name = "employee_category")
-    @Size(max = 50)
-    var employeeCategory: String? = null
 
     @Column(name = "full_time_percentage")
     @Min(0)

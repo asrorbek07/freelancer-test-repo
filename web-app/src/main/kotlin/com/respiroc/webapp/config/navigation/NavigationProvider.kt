@@ -56,7 +56,7 @@ class NavigationProvider {
             NavigationSection(
                 title = "Company", icon = "building",
                 items = listOf(
-                    NavigationSectionItem(label = "Employees", url = "#"),
+                    NavigationSectionItem(label = "Employees", url = "/company/employee"),
                 )
             ),
 
